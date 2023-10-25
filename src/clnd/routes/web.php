@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //   return view('welcome');
 // });
-Route::inertia('/', 'Dashboard');
+//Route::inertia('/', 'Sample');
+Route::inertia('/', 'Home');
