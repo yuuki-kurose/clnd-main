@@ -1,15 +1,17 @@
-//import { Inertia } from '@inertiajs/inertia-react';
-import Layout from "../Layout/LayoutApp";
+import Common from "../Layout/common";
+import Home from "../css/home.module.css";
 
 const Welcome = () => {
   return (
-    <Layout>
-      <div className="home">
-        <h1 className="home_title">スケジュール管理をはじめよう</h1>
-        <button className="home_button">会員登録</button>
-        <button className="home_button">ログイン</button>
+    <Common>
+      <div className={Home.home}>
+          <h1 className={Home.home__title}>スケジュール管理をはじめよう</h1>
+          <div className={Home.home__group}>
+              <button className={Home.home__group__button}>会員登録</button>
+              <button className={Home.home__group__button}>ログイン</button>
+          </div>
       </div>
-    </Layout>
+    </Common>
   );
 };
 
