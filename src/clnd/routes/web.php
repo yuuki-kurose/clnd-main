@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 // });
 //Route::inertia('/', 'Sample');
 Route::inertia('/', 'Home');
+Route::inertia('/register', 'Register');
