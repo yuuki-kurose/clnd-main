@@ -10,6 +10,10 @@
     @viteReactRefresh
     @vite('resources/js/app.jsx')
     @inertiaHead
+    <!-- csrfトークンをreact側で読み込むためjavascript変数に変える -->
+    <script>
+      window.csrfToken = "{{ csrf_token() }}";
+    </script>
   </head>
   <body>
     @inertia

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Common from '../Layout/common';
 import Register from '../css/register.module.css';
+import axios from 'axios';
 
 function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -24,26 +25,46 @@ function RegistrationForm() {
     const apiUrl = 'http://localhost/api/register';
     console.log(apiUrl);
 
-    const requestOptions = {
-      method: 'POST',
+    const data = { // 送信データを定義
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    axios.post(apiUrl, data, {
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': window.csrfToken,
       },
-      body: JSON.stringify(formData),
-    };
-    console.log(requestOptions);
-    // Postリクエストを送信
-    fetch(apiUrl,requestOptions)
-    .then(function(response) {
-      return response.json();
     })
-    .then(data => {
-      console.log('送信完了', data);
+    .then(response => {
+      console.log('送信完了', response.data);
     })
     .catch(error => {
       console.log('エラー', error);
     });
-  };
+    //const requestOptions = {
+      //method: 'POST',
+      //headers: {
+        //'Content-Type': 'application/json',
+        //'X-CSRF-TOKEN': window.csrfToken,
+      //},
+      //body: JSON.stringify(formData),
+    //};
+    //console.log(requestOptions);
+
+    // Postリクエストを送信
+    //fetch(apiUrl,requestOptions)
+      //.then(function(response) {
+        //return response.json();
+      //})
+      //.then(data => {
+        //console.log('送信完了', data);
+      //})
+      //.catch(error => {
+        //console.log('エラー', error);
+      //});
+  }
 
   return (
     <Common>
