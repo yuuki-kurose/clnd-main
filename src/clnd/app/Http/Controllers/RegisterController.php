@@ -13,14 +13,14 @@ class RegisterController extends Controller {
       'email' => 'required| string | email | unique:users',
       'password' => 'required | string | min: 8',
     ]);
-    dd($formData);
+    //dd($formData);
 
     $user = User::create([
       'name' => $request->input('name'),
       'email' => $request->input('email'),
       'password' => Hash::make($request->input('password')),
     ]);
-    dd($user);
+    //dd($user);
     return response()->json(['message' => 'ユーザー登録が完了しました', 'user' => $user]);
   }
 }
