@@ -18,7 +18,7 @@ function loginUserForm() {
 
   // ログインフォーム送信
   const handleSubmit = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
 
     // エンドポイント
     const apiUrl = '/api/login';
@@ -57,6 +57,9 @@ function loginUserForm() {
             パスワード:
             <input type="password" name="password" value={ loginForm.password } onChange={ handleChange } />
           </label>
+          <div>
+            <input type="submit" value="ログイン" />
+          </div>
         </form>
       </div>
     </Common>
