@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Common from '../Layout/common';
 import Register from '../css/register.module.css';
-import axios from 'axios';
+//import axios from 'axios';
 
 function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -22,48 +22,52 @@ function RegistrationForm() {
     event.preventDefault();
 
     // laravelのエンドポイント
-    const apiUrl = 'http://localhost/api/register';
-    console.log(apiUrl);
+    const apiUrl = '/api/register';
 
-    const data = { // 送信データを定義
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-    };
+    // const data = { // 送信データを定義
+    //   name: formData.name,
+    //   email: formData.email,
+    //   password: formData.password,
+    // };
 
-    axios.post(apiUrl, data, {
+    // axios.get('/') 
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    
+    // axios.post(apiUrl, data, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-CSRF-TOKEN': window.csrfToken,
+    //   },
+    // })
+    // .then(response => {
+    //   console.log('送信完了', response.data);
+    // })
+    // .catch(error => {
+    //   console.log('エラー', error);
+    // });
+
+    // 送信形態
+    const requestOptions = {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': window.csrfToken,
       },
-    })
-    .then(response => {
-      console.log('送信完了', response.data);
-    })
-    .catch(error => {
-      console.log('エラー', error);
-    });
-    //const requestOptions = {
-      //method: 'POST',
-      //headers: {
-        //'Content-Type': 'application/json',
-        //'X-CSRF-TOKEN': window.csrfToken,
-      //},
-      //body: JSON.stringify(formData),
-    //};
-    //console.log(requestOptions);
+      body: JSON.stringify(formData),
+    };
+    console.log(requestOptions);
 
     // Postリクエストを送信
-    //fetch(apiUrl,requestOptions)
-      //.then(function(response) {
-        //return response.json();
-      //})
-      //.then(data => {
-        //console.log('送信完了', data);
-      //})
-      //.catch(error => {
-        //console.log('エラー', error);
-      //});
+    fetch(apiUrl,requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        console.log('送信完了', data);
+      })
+      .catch(error => {
+        console.log('エラー', error);
+      });
   }
 
   return (

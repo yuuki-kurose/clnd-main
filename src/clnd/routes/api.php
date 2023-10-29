@@ -20,6 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // react側からフォーム送信で使用するエンドポイント
-Route::middleware('auth:api')->group(function () {
-  Route::post('/api/register', [RegisterController::class, 'register']);
-});
+Route::post('/register', [RegisterController::class, 'register']);
+
