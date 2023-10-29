@@ -59,7 +59,7 @@ function RegistrationForm() {
     };
     console.log(requestOptions);
 
-    // Postリクエストを送信
+    // laravelからレスポンスデータ取得
     fetch(apiUrl,requestOptions)
       .then(response => response.json())
       .then(data => {
