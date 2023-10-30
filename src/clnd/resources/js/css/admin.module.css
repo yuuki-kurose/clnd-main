@@ -1,0 +1,12 @@
+.admin {
+  display: flex;
+  justify-content: center;
+}
+.admin__title {
+  color: gray;
+}
+.admin__form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
