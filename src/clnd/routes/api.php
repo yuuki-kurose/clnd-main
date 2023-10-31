@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminRegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // react側からフォーム送信で使用するエンドポイント
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/admin/register', [RegisterController::class, 'adminRegister']);
+Route::post('/AdminRegister', [AdminRegisterController::class, 'adminRegister']);

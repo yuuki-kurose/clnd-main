@@ -21,4 +21,4 @@ Route::inertia('/', 'Home');
 Route::inertia('/register', 'Register');
 Route::inertia('/login', 'Login');
 Route::inertia('/admin/register', 'admin/Register');
-Route::inertia('/admin/login', 'admin/Login');
+//Route::inertia('/admin/login', 'admin/Login');

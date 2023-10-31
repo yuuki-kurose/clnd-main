@@ -21,7 +21,7 @@ function AdminRegistrationForm() {
     event.preventDefault();
 
     // laravelのエンドポイント
-    const apiUrl = '/api/admin/register';
+    const apiUrl = '/api/AdminRegister';
 
     // 送信形態
     const requestOptions = {

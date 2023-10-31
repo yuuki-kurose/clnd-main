@@ -21,13 +21,13 @@ function loginUserForm() {
     //event.preventDefault();
 
     // エンドポイント
-    const apiUrl = '/api/login';
+    const apiUrl = '/api/User/login';
 
     // 送信形態
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Content-Type': '/application/json',
+        'Content-Type': 'application/json',
         'X-CSRF-TOKEN': window.csrfToken,
       },
       body: JSON.stringify(loginForm)
