@@ -22,7 +22,7 @@ function RegistrationForm() {
     event.preventDefault();
 
     // laravelのエンドポイント
-    const apiUrl = '/api/User/register';
+    const apiUrl = '/api/register';
 
     // const data = { // 送信データを定義
     //   name: formData.name,
