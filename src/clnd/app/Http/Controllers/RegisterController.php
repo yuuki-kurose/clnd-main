@@ -21,6 +21,10 @@ class RegisterController extends Controller {
       'password' => Hash::make($request->input('password')),
     ]);
     //dd($user);
-    return response()->json(['message' => 'ユーザー登録が完了しました', 'user' => $user]);
+    return response()->json([
+      'message' => 'ユーザー登録が完了しました',
+      'user' => $user,
+      'redirect' => '/',
+    ]);
   }
 }
