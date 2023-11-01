@@ -12,6 +12,10 @@
   justify-content: center;
 }
 .home__group__button {
+  text-decoration: none;
   margin: 16px;
-
+  color: black;
+  background: white;
+  padding: 8px;
+  border-radius: 8px;
 }

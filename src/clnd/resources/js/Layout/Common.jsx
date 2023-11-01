@@ -1,7 +1,7 @@
 import React from 'react';
 import common from '../css/common.module.css';
 
-const Common = ({ title, children }) => {
+const Common = ({ children }) => {
   return (
     /**
      * task: headerの差し込み、main内のCSS設定
@@ -9,16 +9,16 @@ const Common = ({ title, children }) => {
     <div>
       <header>
         <div className={common.header}>
-          <h1>{ title }</h1>
+          { /* ヘッダーコンテンツ */}
         </div>
       </header>
       <main>
         <div className={common.main}>
-            { children }
+          { children }
         </div>
       </main>
       <footer>
-        2023 example Application.
+        { /* フッターコンテンツ */ }
       </footer>
     </div>
   )
