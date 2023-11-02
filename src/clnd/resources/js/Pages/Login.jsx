@@ -23,12 +23,13 @@ function loginUserForm() {
     // エンドポイント
     const apiUrl = '/api/login';
 
-    // 送信形態
+    // ユーザー登録時に発行された認証トークンを含める
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': window.csrfToken,
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
       },
       body: JSON.stringify(loginForm)
     }
@@ -37,8 +38,13 @@ function loginUserForm() {
     // laravelからレスポンスデータ取得
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
-      .then(error => {
-        console.log('エラー', error);
+      .then(data => {
+        if(data.token) {
+          localStorage.setItem('authToken', data.token);
+          next('/calender');
+        } else {
+
+        }
       })
   }
 

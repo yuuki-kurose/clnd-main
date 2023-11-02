@@ -17,3 +17,4 @@ yarn-error.log
 /.idea
 /.vscode
 /Users/yuukichi/environment/dev-clnd/docker-compose.yml
+/config/service.php

@@ -13,15 +13,14 @@ class LoginController extends Controller {
     ]);
 
     if(Auth::attempt($loginForm)) {
+      // 成功の場合、セッションIDを新しく生成し、カレンダーページへ遷移
       $request->session()->regenerate();
-      /**
-       * task: リダイレクト先の変更
-       */
-      return redirect()->intended('/');
+      return redirect()->intended('/calender');
     }
-    return back('/login')->withErrors([
+    return back()->withErrors([
       'email' => 'メールアドレスが間違っています',
-      'password' => 'パスワードが間違っています'
+      'password' => 'パスワードが間違っています',
+      'redirect' => '/login',
     ]);
   }
 }
