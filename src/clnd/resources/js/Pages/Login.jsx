@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Common from '../Layout/common';
 import Login from '../css/login.module.css';
 
@@ -9,6 +9,12 @@ function loginUserForm() {
     password: '',
   });
 
+  const [csrfToken, setCsrfToken] = useState('');
+  useEffect(() => {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    setCsrfToken(csrfToken);
+  },[]);
+
   // 入力内容の反映
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,7 +24,7 @@ function loginUserForm() {
 
   // ログインフォーム送信
   const handleSubmit = (event) => {
-    //event.preventDefault();
+    event.preventDefault();
 
     // エンドポイント
     const apiUrl = '/api/login';
@@ -28,12 +34,11 @@ function loginUserForm() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': window.csrfToken,
+        'X-CSRF-TOKEN': csrfToken,
         'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
       },
       body: JSON.stringify(loginForm)
     }
-    console.log(requestOptions);
 
     // laravelからレスポンスデータ取得
     fetch(apiUrl, requestOptions)
@@ -45,6 +50,29 @@ function loginUserForm() {
         } else {
 
         }
+      })
+  }
+    
+  const googleSubmit = (event) => {
+    event.preventDefault();
+
+    const googleApiUrl = '/api/auth/google';
+    const googleRequestOptions = {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': csrfToken,
+      }
+    };
+
+    fetch(googleApiUrl, googleRequestOptions)
+      .then(response => response)
+      .then(data => {
+        if(data.message) {
+          console.log('メッセージ', data.message);
+        }
+        // console.log('googleでログイン成功');
       })
   }
 
@@ -65,6 +93,12 @@ function loginUserForm() {
           </label>
           <div>
             <input type="submit" value="ログイン" />
+          </div>
+        </form>
+        <form onSubmit={ googleSubmit }>
+          <div>
+            <input type="hidden" name="_token" value={ csrfToken } />
+            <input type="submit" value="Googleでログイン" />
           </div>
         </form>
       </div>
