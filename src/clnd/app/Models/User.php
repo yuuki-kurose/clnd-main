@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * リレーション - IdentityProviders
+     */
+    public function IdentityProviders()
+    {
+      return $this->hasMany('App\IdentityProvider', 'user_id');
+    }
 }

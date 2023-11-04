@@ -19,8 +19,9 @@ Route::post('/AdminRegister', [AdminRegisterController::class, 'adminRegister'])
 Route::post('/AdminLogin', [AdminLoginController::class, 'authenticate']);
 
 // googleログイン使用のみ、CSRFの確認を不要にする
-Route::middleware(['web'])->group(function () {
-  Route::post('/auth/google', [GoogleController::class, 'redirectToGoogle'])
-    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-  // Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
-});
+// Route::middleware(['web'])->group(function () {
+//   Route::post('/auth/google', [GoogleController::class, 'redirectToGoogle'])
+//     ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+//   // Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+// });
+Route::get('/auth/google',  [GoogleController::class, 'redirectToGoogle']);

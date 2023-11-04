@@ -58,8 +58,8 @@ function loginUserForm() {
 
     const googleApiUrl = '/api/auth/google';
     const googleRequestOptions = {
-      method: 'POST',
-      mode: 'no-cors',
+      method: 'GET',
+      // mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': csrfToken,
@@ -69,10 +69,7 @@ function loginUserForm() {
     fetch(googleApiUrl, googleRequestOptions)
       .then(response => response)
       .then(data => {
-        if(data.message) {
-          console.log('メッセージ', data.message);
-        }
-        // console.log('googleでログイン成功');
+        
       })
   }
 
