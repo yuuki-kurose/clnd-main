@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::inertia('/', 'Home');
 Route::inertia('/register', 'Register');
 Route::inertia('/login', 'Login');
+Route::inertia('/calender', 'Calender');
 
 /**
  * 管理者側

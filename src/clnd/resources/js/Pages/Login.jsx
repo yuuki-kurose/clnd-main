@@ -9,6 +9,9 @@ function loginUserForm() {
     password: '',
   });
 
+  // csrfトークン取得
+  // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
   // 入力内容の反映
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,7 +21,7 @@ function loginUserForm() {
 
   // ログインフォーム送信
   const handleSubmit = (event) => {
-    //event.preventDefault();
+    event.preventDefault();
 
     // エンドポイント
     const apiUrl = '/api/login';
@@ -28,7 +31,7 @@ function loginUserForm() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': window.csrfToken,
+        // 'X-CSRF-TOKEN': csrfToken,
       },
       body: JSON.stringify(loginForm)
     }
@@ -37,9 +40,14 @@ function loginUserForm() {
     // laravelからレスポンスデータ取得
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
-      .then(error => {
-        console.log('エラー', error);
-      })
+      .then(data => {
+        if(data.message === '認証成功') {
+          console.log(data.message);
+          window.location.href = data.redirectTo;
+        } else {
+          console.log('error', data.message);
+        }
+      });
   }
 
   return(

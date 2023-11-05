@@ -13,15 +13,16 @@ class LoginController extends Controller {
     ]);
 
     if(Auth::attempt($loginForm)) {
-      $request->session()->regenerate();
-      /**
-       * task: リダイレクト先の変更
-       */
-      return redirect()->intended('/');
+      // $request->session()->regenerate();
+      return response()->json([
+        'message' => '認証成功',
+        'redirectTo' => '/calender',
+      ], 200);
     }
-    return back('/login')->withErrors([
-      'email' => 'メールアドレスが間違っています',
-      'password' => 'パスワードが間違っています'
-    ]);
+    // return back('/login')->withErrors([
+    //   'email' => 'メールアドレスが間違っています',
+    //   'password' => 'パスワードが間違っています'
+    // ]);
+    return response()->json(['message' => '認証失敗'], 401);
   }
 }

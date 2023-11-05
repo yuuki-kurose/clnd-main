@@ -23,7 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // react側からフォーム送信で使用するエンドポイント
-Route::post('/register', [RegisterController::class, 'register']);
-Route::post('/login', [LoginController::class, 'authenticate']);
+Route::middleware('cors')->group(function() {
+  Route::post('/register', [RegisterController::class, 'register']);
+  Route::post('/login', [LoginController::class, 'authenticate']);
+});
+
 Route::post('/AdminRegister', [AdminRegisterController::class, 'adminRegister']);
 Route::post('/AdminLogin', [AdminLoginController::class, 'authenticate']);

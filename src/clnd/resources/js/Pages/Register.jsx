@@ -9,6 +9,9 @@ function RegistrationForm() {
     password: '',
   });
 
+  // csrfトークンの取得
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
   // フォーム入力の反映
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -28,7 +31,7 @@ function RegistrationForm() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': window.csrfToken,
+        'X-CSRF-TOKEN': csrfToken,
       },
       body: JSON.stringify(formData),
     };
