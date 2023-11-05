@@ -10,7 +10,7 @@ function loginUserForm() {
   });
 
   // csrfトークン取得
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
   // 入力内容の反映
   const handleChange = (event) => {
@@ -31,7 +31,7 @@ function loginUserForm() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': csrfToken,
+        // 'X-CSRF-TOKEN': csrfToken,
       },
       body: JSON.stringify(loginForm)
     }

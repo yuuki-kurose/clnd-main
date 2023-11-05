@@ -1,0 +1,25 @@
+.calender {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.calender__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.calender__title {
+  color: gray;
+  font-size: 24px;
+}
+
+.calender__list {
+  display: flex;
+  align-items: self-end;
+}
+
+.calender__inner {
+  padding: 64px 0;
+}
