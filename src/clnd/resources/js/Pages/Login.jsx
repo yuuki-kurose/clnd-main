@@ -3,14 +3,18 @@ import Common from '../Layout/common';
 import Login from '../css/login.module.css';
 
 function loginUserForm() {
+  // ログインフォーム変数定義
   const [loginForm, setLoginForm] = useState({
     name: '',
     email: '',
     password: '',
   });
 
-  // csrfトークン取得
-  // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  // エラー変数定義
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  });
 
   // 入力内容の反映
   const handleChange = (event) => {
@@ -31,21 +35,32 @@ function loginUserForm() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // 'X-CSRF-TOKEN': csrfToken,
       },
       body: JSON.stringify(loginForm)
     }
-    console.log(requestOptions);
 
     // laravelからレスポンスデータ取得
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
       .then(data => {
-        if(data.message === '認証成功') {
+        if(data.message === "認証成功") {
           console.log(data.message);
           window.location.href = data.redirectTo;
-        } else {
-          console.log('error', data.message);
+        } else if(data.message === "認証失敗") {
+          if(data.errors.email) {
+            setErrors({
+              email: data.errors.email,
+              password: '',
+            });
+          } else if(data.errors.password) {
+            /**
+             * task: パスワードのエラーハンドリング見直し
+             */
+            setErrors({
+              email: '',
+              password: data.errors.password,
+            });
+          }
         }
       });
   }
@@ -59,11 +74,21 @@ function loginUserForm() {
         <form className={ Login.login__form } onSubmit={ handleSubmit }>
           <label>
             メールアドレス:
-            <input type="email" name="email" value={ loginForm.email } onChange={ handleChange } />
+            <input  type="email"
+                    name="email"
+                    value={ loginForm.email }
+                    onChange={ handleChange }
+            />
+            { errors.email && <div className={ Login.login__error }>{ errors.email }</div> }
           </label>
           <label>
             パスワード:
-            <input type="password" name="password" value={ loginForm.password } onChange={ handleChange } />
+            <input  type="password"
+                    name="password"
+                    value={ loginForm.password }
+                    onChange={ handleChange }
+            />
+            { errors.password && <div className={ Login.login__error }>{ errors.password }</div> }
           </label>
           <div>
             <input type="submit" value="ログイン" />

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 Route::inertia('/', 'Home');
 Route::inertia('/register', 'Register');
 Route::inertia('/login', 'Login');
+/**
+ * task: 認証成功した後のルートを作成する
+ */
 Route::inertia('/calender', 'Calender');
 
 /**

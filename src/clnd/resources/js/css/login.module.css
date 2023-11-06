@@ -10,3 +10,6 @@
   flex-direction: column;
   text-align: center;
 }
+.login__error {
+  color: red;
+}
