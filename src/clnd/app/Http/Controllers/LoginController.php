@@ -7,22 +7,32 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller {
   public function authenticate(Request $request) {
-    $loginForm = $request->validate([
-      'email' => ['required', 'email'],
-      'password' => ['required'],
-    ]);
 
-    if(Auth::attempt($loginForm)) {
-      // $request->session()->regenerate();
+    $email = $request->input('email');
+    $password = $request->input('password');
+
+    if(Auth::attempt(['email' => $email, 'password' => $password])) {
       return response()->json([
         'message' => '認証成功',
         'redirectTo' => '/calender',
       ], 200);
+    } else if(!Auth::attempt(['email' => $email])) {
+      $errors = ['email' => 'メールアドレスが間違っています'];
+      return response()->json([
+        'message' => '認証失敗',
+        'redirectTo' => '/login',
+        'errors' => $errors,
+      ], 422);
+    } else {
+      /**
+       * task: パスワードのエラーハンドリング見直し
+       */
+      $errors = ['password' => 'パスワードが間違っています'];
+      return response()->json([
+        'message' => '認証失敗',
+        'redirectTo' => '/login',
+        'errors' => $errors,
+      ], 422);
     }
-    // return back('/login')->withErrors([
-    //   'email' => 'メールアドレスが間違っています',
-    //   'password' => 'パスワードが間違っています'
-    // ]);
-    return response()->json(['message' => '認証失敗'], 401);
   }
 }
