@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // react側からフォーム送信で使用するエンドポイント
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/schedule', [ScheduleController::class, 'posting']);
+Route::post('/schedule', [ScheduleController::class, 'store']);
 
 
 Route::post('/AdminRegister', [AdminRegisterController::class, 'adminRegister']);
