@@ -15,9 +15,12 @@ class ScheduleController extends Controller {
      * @return Response
      */
     $scheduleForm = (object)$request->validateWithBag('post', [
+      /**
+       * task: validationルールを設定する
+       */
       'date' => 'required',
-      'requirement' => 'required | min: 4',
-      'memo' => 'min: 4',
+      'requirement' => 'required',
+      'memo' => '',
     ]);
 
     //検証エラーハンドリング
