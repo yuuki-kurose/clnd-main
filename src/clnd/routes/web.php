@@ -12,6 +12,8 @@ Route::inertia('/login', 'Login');
  * task: 認証成功した後のルートを作成する
  */
 Route::inertia('/calender', 'Calender');
+// 仮ルート
+Route::inertia('/schedule', 'Schedule');
 
 /**
  * 管理者側

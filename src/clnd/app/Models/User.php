@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Userモデル内のIDを外部キーとして持っているモデルと関連付ける
+     */
+    public function user()
+    {
+      return $this->hasOne(Schedule::class);
+    }
 }
