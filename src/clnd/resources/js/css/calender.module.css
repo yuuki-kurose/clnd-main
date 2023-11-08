@@ -23,3 +23,18 @@
 .calender__inner {
   padding: 64px 0;
 }
+
+.calender__btn {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 64px;
+  background: dodgerblue;
+  color: white;
+}

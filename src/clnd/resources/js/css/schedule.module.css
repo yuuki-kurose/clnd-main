@@ -1,12 +1,17 @@
 .schedule {
   font-size: 12px;
   padding: 16px;
-  background: white;
+  background: aliceblue;
   width: 320px;
   display: flex;
   justify-content: center;
   text-align: center;
   margin: 0 auto;
+  position: fixed;
+  top: 80px;
+  right: 50px;
+  left: 50px;
+  box-shadow: 0 0 8px gray;
 }
 .schedule__form {
   display: flex;

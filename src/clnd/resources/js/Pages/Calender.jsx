@@ -1,11 +1,15 @@
 import React, { useState }  from 'react';
 import Common from '../Layout/common';
 import Calender from '../css/calender.module.css';
+import ScheduleForm from '../Pages/Schedule';
 
 function calenderUserPage() {
   // 現在の年月を取得
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth()+1);
+
+  // 予定作成フォームの状態を取得
+  const [openForm, setOpenForm] = useState(false);
 
   // カレンダーに反映する関数
   const calender = createCalender(year, month);
@@ -17,6 +21,10 @@ function calenderUserPage() {
   const prevlast = new Date(year,month-1, 0).getDate();
   console.log(prevlast);
 
+  // 予定作成フォームの表示/非表示
+  const handleClick = () => {
+    setOpenForm(!openForm);
+  };
 
   return(
     <Common>
@@ -55,6 +63,15 @@ function calenderUserPage() {
               ))}
             </tbody>
           </table>
+
+          {/* 予定作成フォームコンポーネントの呼び出し */}
+          <div>
+            <button className={ Calender.calender__btn }
+                    onClick={ handleClick }
+            >+
+            </button>
+            { openForm && <ScheduleForm />}
+          </div>
         </div>
       </div>
     </Common>
