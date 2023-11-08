@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Common from "../Layout/common";
 import Schedule from "../css/schedule.module.css";
 
 function ScheduleForm() {
@@ -51,45 +50,43 @@ function ScheduleForm() {
   }
 
   return(
-    <Common>
-      <div className={ Schedule.schedule }>
-        <form className={ Schedule.schedule__form }
-              onSubmit={ handleSubmit }
-        >
-          <label className={ Schedule.schedule__label }>
-            日付：
-            <input  type="date"
-                    name="date"
-                    placeholder="日付の選択をしてください"
-                    className={ Schedule.schedule__content }
+    <div className={ Schedule.schedule }>
+      <form className={ Schedule.schedule__form }
+          onSubmit={ handleSubmit }
+      >
+        <label className={ Schedule.schedule__label }>
+          日付：
+          <input  type="date"
+                  name="date"
+                  placeholder="日付の選択をしてください"
+                  className={ Schedule.schedule__content }
+                  onChange={ handleChange }
+          />
+        </label>
+        <label className={ Schedule.schedule__label }>
+          要件：
+          <input  type="text"
+                  name="requirement"
+                  placeholder="内容を入力してください"
+                  className={ Schedule.schedule__content }
+                  onChange={ handleChange }
+          />
+        </label>
+        <label className={ Schedule.schedule__label }>
+          メモ：
+          <textarea className={ Schedule.schedule__content }
+                    name="memo"
                     onChange={ handleChange }
-            />
-          </label>
-          <label className={ Schedule.schedule__label }>
-            要件：
-            <input  type="text"
-                    name="requirement"
-                    placeholder="内容を入力してください"
-                    className={ Schedule.schedule__content }
-                    onChange={ handleChange }
-            />
-          </label>
-          <label className={ Schedule.schedule__label }>
-            メモ：
-            <textarea className={ Schedule.schedule__content }
-                      name="memo"
-                      onChange={ handleChange }
-            >
-            </textarea>
-          </label>
-          <div>
-            <input  type="submit"
-                    value="作成"
-            />
-          </div>
-        </form>
-      </div>
-    </Common>
+          >
+          </textarea>
+        </label>
+        <div>
+          <input  type="submit"
+                  value="作成"
+          />
+        </div>
+      </form>
+    </div>
   )
 }
 
