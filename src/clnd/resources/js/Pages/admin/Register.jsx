@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Common from '../../Layout/common';
-import Admin from '../../css/admin.module.css';
+import Admin from '../../scss/admin.module.scss';
 
 function AdminRegistrationForm() {
   const [formData, setFormData] = useState({

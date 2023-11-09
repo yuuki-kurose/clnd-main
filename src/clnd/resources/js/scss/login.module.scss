@@ -1,0 +1,25 @@
+// ログインフォーム
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: white;
+
+  .login__title {
+    width: 320px;
+    color: gray;
+  }
+
+  .login__form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 320px;
+  }
+
+  .login__error {
+    color: red;
+  }
+}

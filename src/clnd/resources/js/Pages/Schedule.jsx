@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Schedule from "../css/schedule.module.css";
+import Schedule from "../scss/schedule.module.scss";
 
 function ScheduleForm() {
 

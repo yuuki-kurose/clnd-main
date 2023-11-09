@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Common from '../Layout/common';
-import Login from '../css/login.module.css';
+import Login from '../scss/login.module.scss';
 
 function loginUserForm() {
   // ログインフォーム変数定義
@@ -68,32 +68,35 @@ function loginUserForm() {
   return(
     <Common>
       <div className={ Login.login }>
-        <h1 className={ Login.login__title }>ログイン</h1>
-      </div>
-      <div>
-        <form className={ Login.login__form } onSubmit={ handleSubmit }>
-          <label>
-            メールアドレス:
-            <input  type="email"
-                    name="email"
-                    value={ loginForm.email }
-                    onChange={ handleChange }
-            />
-            { errors.email && <div className={ Login.login__error }>{ errors.email }</div> }
-          </label>
-          <label>
-            パスワード:
-            <input  type="password"
-                    name="password"
-                    value={ loginForm.password }
-                    onChange={ handleChange }
-            />
-            { errors.password && <div className={ Login.login__error }>{ errors.password }</div> }
-          </label>
-          <div>
-            <input type="submit" value="ログイン" />
-          </div>
-        </form>
+        <div>
+          <h1 className={ Login.login__title }>ログイン</h1>
+        </div>
+        <div>
+          <form className={ Login.login__form } onSubmit={ handleSubmit }>
+            {/* task: デザイン調整 */}
+            <label>
+              メールアドレス:
+              <input  type="email"
+                      name="email"
+                      value={ loginForm.email }
+                      onChange={ handleChange }
+              />
+              { errors.email && <div className={ Login.login__error }>{ errors.email }</div> }
+            </label>
+            <label>
+              パスワード:
+              <input  type="password"
+                      name="password"
+                      value={ loginForm.password }
+                      onChange={ handleChange }
+              />
+              { errors.password && <div className={ Login.login__error }>{ errors.password }</div> }
+            </label>
+            <div>
+              <input type="submit" value="ログイン" />
+            </div>
+          </form>
+        </div>
       </div>
     </Common>
   )
