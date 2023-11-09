@@ -1,7 +1,7 @@
 import React, { useState }  from 'react';
-import Common from '../Layout/common';
-import Calender from '../css/calender.module.css';
+import Calender from '../scss/calender.module.scss';
 import ScheduleForm from '../Pages/Schedule';
+import HeaderCommon from '../Layout/header';
 
 function calenderUserPage() {
   // 現在の年月を取得
@@ -27,7 +27,10 @@ function calenderUserPage() {
   };
 
   return(
-    <Common>
+    <div>
+      <HeaderCommon />
+
+      {/* カレンダーページ */}
       <div className={ Calender.calender }>
         <div className={ Calender.calender__header }>
           <div>
@@ -74,7 +77,7 @@ function calenderUserPage() {
           </div>
         </div>
       </div>
-    </Common>
+    </div>
   )
 }
 

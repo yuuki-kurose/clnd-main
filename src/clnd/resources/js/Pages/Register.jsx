@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Common from '../Layout/common';
-import Register from '../css/register.module.css';
+import Register from '../scss/register.module.scss';
 
 function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -53,12 +53,13 @@ function RegistrationForm() {
 
   return (
     <Common>
-      <div>
-        <div className={ Register.register}>
+      <div className={ Register.register}>
+        <div>
           <h1 className={ Register.register__title }>ユーザー登録</h1>
         </div>
         <div>
           <form className={ Register.register__form } onSubmit={ handleSubmit }>
+            {/* task: デザイン調整 */}
             <label>
               アカウント名:
               <input type="text" name="name" value={ formData.name } onChange={ handleChange } />

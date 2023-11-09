@@ -1,12 +1,19 @@
+// 会員登録フォーム
 .register {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: white;
 }
 .register__title {
+  width: 320px;
   color: gray;
 }
 .register__form {
   display: flex;
   flex-direction: column;
   text-align: center;
+  width: 320px;
 }
