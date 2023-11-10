@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Schedule from "../scss/schedule.module.scss";
+import CalenderUserPage from "./Calender";
 
 function ScheduleForm() {
 
@@ -9,6 +10,9 @@ function ScheduleForm() {
     requirement: '',
     memo: '',
   });
+
+  // レスポンスデータ変数定義
+  const [responseData, setResponseData] = useState(null);
 
   // 入力内容の反映
   const handleChange = (event) => {
@@ -37,16 +41,15 @@ function ScheduleForm() {
       body: JSON.stringify(scheduleForm)
     };
 
+    // リクエストを送信、レスポンスを受け取る
     fetch(scheduleApiUrl, requestOptions)
       .then(response => response.json())
       .then(data => {
-        if(data.message) {
-          console.log(data.message);
-        }
+        setResponseData(data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
-      })
+    });
   }
 
   return(
@@ -86,6 +89,8 @@ function ScheduleForm() {
           />
         </div>
       </form>
+      {/* カレンダーコンポーネントにレスポンスデータのみを渡す */}
+      { responseData && <CalenderUserPage responseData={ responseData } /> }
     </div>
   )
 }
