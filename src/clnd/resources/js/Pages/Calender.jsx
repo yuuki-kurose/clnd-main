@@ -20,12 +20,11 @@ const CalenderUserPage = function(props) {
   /**
    * カレンダーページに予定を登録
    */
-  const { responseData } = props;
-  const [viewData, setViewData] = useState(responseData);
+
+  const [responseData, setResponseData] = useState(null);
   useEffect(() => {
-    setViewData(responseData);
-  })
-  
+    setResponseData(props.responseData);
+  }, [props.responseData]);
 
   /**
    * カレンダーページ上のアクションボタン
@@ -71,12 +70,12 @@ const CalenderUserPage = function(props) {
                         </div>
                         <div> 
                           {/* 各日に対し予定登録があった場合、データをセットする */}
-                          { viewData &&
+                          { responseData && (
                             <div>
                               <p>レスポンスデータが渡ってきました</p>
                               <pre>{ JSON.stringify(responseData, null, 2) }</pre>
                             </div>
-                          }
+                          )}
                         </div>
                       </div>
                     </td>

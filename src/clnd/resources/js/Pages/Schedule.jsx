@@ -14,11 +14,13 @@ function ScheduleForm() {
   // レスポンスデータ変数定義
   const [responseData, setResponseData] = useState(null);
 
+  // フォームの表示・非表示の変数定義
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   // 入力内容の反映
   const handleChange = (event) => {
     const { name, value } = event.target;
     setScheduleForm({ ...scheduleForm, [name]: value});
-    console.log(scheduleForm);
   }
 
   // csrfトークン取得
@@ -46,6 +48,7 @@ function ScheduleForm() {
       .then(response => response.json())
       .then(data => {
         setResponseData(data);
+        setFormSubmitted(true);
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +56,7 @@ function ScheduleForm() {
   }
 
   return(
-    <div className={ Schedule.schedule }>
+    <div className={`${ Schedule.schedule } ${ formSubmitted ? Schedule.hidden: ''}`}>
       <form className={ Schedule.schedule__form }
           onSubmit={ handleSubmit }
       >
@@ -89,8 +92,11 @@ function ScheduleForm() {
           />
         </div>
       </form>
+      {/* { formSubmitted && (
+        alert('フォームが送信されました')
+      )} */}
       {/* カレンダーコンポーネントにレスポンスデータのみを渡す */}
-      { responseData && <CalenderUserPage responseData={ responseData } /> }
+      { responseData && <CalenderUserPage responseData={ responseData } />}
     </div>
   )
 }
