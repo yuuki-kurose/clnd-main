@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calender from '../scss/calender.module.scss';
 import ScheduleForm from '../Pages/Schedule';
-import HeaderCommon from '../Layout/header';
 
 const CalenderUserPage = function(props) {
   /**
@@ -20,11 +19,11 @@ const CalenderUserPage = function(props) {
   /**
    * カレンダーページに予定を登録
    */
-
-  const [responseData, setResponseData] = useState(null);
+  const { responseData } = props;
+  const [viewData, setViewData] = useState(responseData);
   useEffect(() => {
-    setResponseData(props.responseData);
-  }, [props.responseData]);
+    setViewData(responseData);
+  }, [responseData]);
 
   /**
    * カレンダーページ上のアクションボタン
@@ -38,8 +37,6 @@ const CalenderUserPage = function(props) {
 
   return(
     <div>
-      <HeaderCommon />
-
       {/* カレンダーページ */}
       <div className={ Calender.calender }>
         <div className={ Calender.calender__header }>
@@ -68,14 +65,13 @@ const CalenderUserPage = function(props) {
                         <div className={ Calender.calender__inner }>
                           {day > last ? day - last : day <= 0 ? prevlast + day : day }
                         </div>
-                        <div> 
-                          {/* 各日に対し予定登録があった場合、データをセットする */}
-                          { responseData && (
-                            <div>
-                              <p>レスポンスデータが渡ってきました</p>
-                              <pre>{ JSON.stringify(responseData, null, 2) }</pre>
-                            </div>
-                          )}
+                        <div>
+                        { viewData && (
+                          <div>
+                          <p>レスポンス結果が渡ってきました</p>
+                          <pre>{ JSON.stringify(responseData, null, 2) }</pre>
+                          </div>
+                        )}
                         </div>
                       </div>
                     </td>
