@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Calender from '../scss/calender.module.scss';
 import ScheduleForm from '../Pages/Schedule';
 
-const CalenderUserPage = function(props) {
-  /**
-   * カレンダーページ表示
-   */
-  // 現在の年月を取得
+const CalenderUserPage = React.memo(function({ updateEvents }) {
+
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth()+1);
   // カレンダーの日付を反映する関数を呼び出し
@@ -16,18 +13,6 @@ const CalenderUserPage = function(props) {
   // 前月の最後日を取得
   const prevlast = new Date(year,month-1, 0).getDate();
 
-  /**
-   * カレンダーページに予定を登録
-   */
-  const { responseData } = props;
-  const [viewData, setViewData] = useState(responseData);
-  useEffect(() => {
-    setViewData(responseData);
-  }, [responseData]);
-
-  /**
-   * カレンダーページ上のアクションボタン
-   */
   // 予定作成フォームの状態を取得
   const [openForm, setOpenForm] = useState(false);
   // 予定作成フォームの表示/非表示
@@ -35,7 +20,7 @@ const CalenderUserPage = function(props) {
     setOpenForm(!openForm);
   };
 
-  return(
+  return (
     <div>
       {/* カレンダーページ */}
       <div className={ Calender.calender }>
@@ -66,12 +51,6 @@ const CalenderUserPage = function(props) {
                           {day > last ? day - last : day <= 0 ? prevlast + day : day }
                         </div>
                         <div>
-                        { viewData && (
-                          <div>
-                          <p>レスポンス結果が渡ってきました</p>
-                          <pre>{ JSON.stringify(responseData, null, 2) }</pre>
-                          </div>
-                        )}
                         </div>
                       </div>
                     </td>
@@ -80,7 +59,6 @@ const CalenderUserPage = function(props) {
               ))}
             </tbody>
           </table>
-
           {/* 予定作成フォームコンポーネントの呼び出し */}
           <div>
             <button className={ Calender.calender__btn }
@@ -92,8 +70,8 @@ const CalenderUserPage = function(props) {
         </div>
       </div>
     </div>
-  )
-};
+  );
+});
 
 /**
  * カレンダー表示に使用する関数

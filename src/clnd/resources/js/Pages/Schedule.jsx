@@ -1,52 +1,36 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import Schedule from "../scss/schedule.module.scss";
-import CalenderUserPage from "./Calender";
+import FeatureOfForm from './Feature';
 
-function ScheduleForm() {
-
+const ScheduleForm = ({ passToResponseData }) => {
   // フォームデータ変数定義
-  const [scheduleForm, setScheduleForm] = useState({
+  const [scheduleFormData, setScheduleFormData] = useState({
     date: '',
     requirement: '',
     memo: '',
   });
 
-  // レスポンスデータ変数定義
-  const [responseData, setResponseData] = useState(null);
+   // フォームの表示・非表示の変数定義
+   const [formSubmitted, setFormSubmitted] = useState(true);
 
-  // フォームの表示・非表示の変数定義
-  const [formSubmitted, setFormSubmitted] = useState(true);
-
-  // 入力内容の反映
+   // 入力内容の反映
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setScheduleForm({ ...scheduleForm, [name]: value});
-  }
+    setScheduleFormData({ ...scheduleFormData, [name]: value});
+    console.log(scheduleFormData);
+  };
 
-  // csrfトークン取得
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-  // フォームデータ送信
-  const handleSubmit = (event) => {
+  // props経由で関数を使用し、Feature.jsxに値を渡す
+  const handleInputSubmit = (event) => {
     event.preventDefault();
-    const scheduleApiUrl = '/api/schedule';
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': csrfToken,
-      },
-      body: JSON.stringify(scheduleForm)
-    };
-    fetch(scheduleApiUrl, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        setResponseData(data);
-        setFormSubmitted(false);
-      })
-      .catch((error) => {
-        console.log(error);
-    });
+    setScheduleFormData(scheduleFormData);
+    setFormSubmitted(false);
+  };
+
+  // レスポンスデータをセットし、親（Calender .jsx)の関数を呼び出す
+  // task: カレンダーコンポーネント内にpassToResponseDataの定義を行う
+  const handleAddEvent = (data) => {
+    passToResponseData(data);
   };
 
   return(
@@ -54,7 +38,7 @@ function ScheduleForm() {
       { formSubmitted && (
         <div className={ Schedule.schedule }>
           <form className={ Schedule.schedule__form }
-                onSubmit={ handleSubmit }
+                onSubmit={ handleInputSubmit }
           >
             <label className={ Schedule.schedule__label }>
               日付：
@@ -87,11 +71,11 @@ function ScheduleForm() {
                       value="作成"
               />
             </div>
+            {/* 機能コンポーネントにフォームデータを渡す */}
+            <FeatureOfForm scheduleFormData={ scheduleFormData } handleAddEvent={ handleAddEvent } />
           </form>
         </div>
       )}
-      {/* カレンダーコンポーネントにレスポンスデータのみを渡す */}
-      { responseData && <CalenderUserPage responseData={ responseData } />}
     </div>
   );
 };
