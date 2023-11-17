@@ -1,3 +1,4 @@
+// task: scssの書き方に変更する
 .calender {
   display: flex;
   justify-content: center;
@@ -22,6 +23,16 @@
 
 .calender__inner {
   padding: 64px 0;
+}
+
+.calender__content {
+  background: aliceblue;
+  border-radius: 25px;
+  margin: 0 4px;
+
+  .calender__detail {
+    padding: 4px;
+  }
 }
 
 .calender__btn {

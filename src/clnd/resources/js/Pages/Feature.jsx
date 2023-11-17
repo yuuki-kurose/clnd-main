@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const FeatureOfForm = ({ handleAddEvent, scheduleFormData }) => {
+const FeatureOfForm = ({ formData, handleAddEvent, submitEvent }) => {
   // レスポンスデータを格納する変数定義
   const [updateEvents, setUpdateEvents] = useState('');
  
@@ -19,7 +19,7 @@ const FeatureOfForm = ({ handleAddEvent, scheduleFormData }) => {
           'CONTENT-TYPE': 'application/json',
           'X-CSRF-TOKEN': csrfToken,
         },
-        body: JSON.stringify(scheduleFormData)
+        body: JSON.stringify(formData)
       });
       if(!response.ok) {
         throw new Error('エラーが出ました');
@@ -34,10 +34,10 @@ const FeatureOfForm = ({ handleAddEvent, scheduleFormData }) => {
     }
   };
 
-  // コンポーネントがマウントする時だけバックエンドとのやり取りを行う
+  // Schedule.jsxで送信イベントが行われた場合のみ、バックエンドとのやり取りを行う
   useEffect(() => {
-    handleSubmit();
-  }, [scheduleFormData]);
+   handleSubmit(formData);
+  }, [submitEvent]);
 };
 
 export default FeatureOfForm;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Calender from '../scss/calender.module.scss';
 import ScheduleForm from '../Pages/Schedule';
 
-const CalenderUserPage = React.memo(function({ updateEvents }) {
+const CalenderUserPage = React.memo(function() {
 
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth()+1);
@@ -18,6 +18,16 @@ const CalenderUserPage = React.memo(function({ updateEvents }) {
   // 予定作成フォームの表示/非表示
   const handleClick = () => {
     setOpenForm(!openForm);
+  };
+
+  // Schedule.jsxから値が返ってくるので取得し、更新する
+  const [responseViewData, setResponseViewData] = useState({
+    date: '',
+    requirement: '',
+    memo: '',
+  });
+  const passToResponseData = (data) => {
+    setResponseViewData(data);
   };
 
   return (
@@ -50,7 +60,11 @@ const CalenderUserPage = React.memo(function({ updateEvents }) {
                         <div className={ Calender.calender__inner }>
                           {day > last ? day - last : day <= 0 ? prevlast + day : day }
                         </div>
-                        <div>
+                        {/* 取得したデータを反映させる */}
+                        <div className={ Calender.calender__content }>
+                          { responseViewData && (
+                            <p className={ Calender.calender__detail }>{ responseViewData.requirement }</p>
+                          )}
                         </div>
                       </div>
                     </td>
@@ -65,7 +79,7 @@ const CalenderUserPage = React.memo(function({ updateEvents }) {
                     onClick={ handleClick }
             >+
             </button>
-            { openForm && <ScheduleForm />}
+            { openForm && <ScheduleForm passToResponseData={ passToResponseData } />}
           </div>
         </div>
       </div>
