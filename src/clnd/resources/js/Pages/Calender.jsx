@@ -1,35 +1,37 @@
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
 import Calender from '../scss/calender.module.scss';
 import ScheduleForm from '../Pages/Schedule';
-import HeaderCommon from '../Layout/header';
 
-function calenderUserPage() {
-  // 現在の年月を取得
+const CalenderUserPage = React.memo(function() {
+
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth()+1);
+  // カレンダーの日付を反映する関数を呼び出し
+  const calender = createCalender(year, month);
+  // 当月の最後日を取得
+  const last = new Date(year, month, 0).getDate();
+  // 前月の最後日を取得
+  const prevlast = new Date(year,month-1, 0).getDate();
 
   // 予定作成フォームの状態を取得
   const [openForm, setOpenForm] = useState(false);
-
-  // カレンダーに反映する関数
-  const calender = createCalender(year, month);
-
-  // 当月の最後日
-  const last = new Date(year, month, 0).getDate();
-  console.log(last);
-  // 前月の最後日
-  const prevlast = new Date(year,month-1, 0).getDate();
-  console.log(prevlast);
-
   // 予定作成フォームの表示/非表示
   const handleClick = () => {
     setOpenForm(!openForm);
   };
 
-  return(
-    <div>
-      <HeaderCommon />
+  // Schedule.jsxから値が返ってくるので取得し、更新する
+  const [responseViewData, setResponseViewData] = useState({
+    date: '',
+    requirement: '',
+    memo: '',
+  });
+  const passToResponseData = (data) => {
+    setResponseViewData(data);
+  };
 
+  return (
+    <div>
       {/* カレンダーページ */}
       <div className={ Calender.calender }>
         <div className={ Calender.calender__header }>
@@ -49,6 +51,7 @@ function calenderUserPage() {
               </tr>
             </thead>
             <tbody>
+              {/* task: コードの分解と理解 */}
               { calender.map((week,i) => (
                 <tr key={ week.join('') }>
                   { week.map((day,j) => (
@@ -57,7 +60,11 @@ function calenderUserPage() {
                         <div className={ Calender.calender__inner }>
                           {day > last ? day - last : day <= 0 ? prevlast + day : day }
                         </div>
-                        <div> 
+                        {/* 取得したデータを反映させる */}
+                        <div className={ Calender.calender__content }>
+                          { responseViewData && (
+                            <p className={ Calender.calender__detail }>{ responseViewData.requirement }</p>
+                          )}
                         </div>
                       </div>
                     </td>
@@ -66,30 +73,45 @@ function calenderUserPage() {
               ))}
             </tbody>
           </table>
-
           {/* 予定作成フォームコンポーネントの呼び出し */}
           <div>
             <button className={ Calender.calender__btn }
                     onClick={ handleClick }
             >+
             </button>
-            { openForm && <ScheduleForm />}
+            { openForm && <ScheduleForm passToResponseData={ passToResponseData } />}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+});
 
+/**
+ * カレンダー表示に使用する関数
+ */
 function createCalender(year, month) {
-  const firstDay = new Date(year, month -1, 1).getDay();
-  console.log(firstDay);
-  return [0,1,2,3,4].map((weekIndex) => {
-    return [0,1,2,3,4,5,6].map((dayIndex) => {
-        const day = dayIndex + 1 + weekIndex * 7
-        return day - firstDay
-    })
-  })
-}
+  // 5週分の行を用意
+  const weekArray = [0,1,2,3,4];
+  // 7日分の列を用意
+  const dayArray = [0,1,2,3,4,5,6];
+  // 今月１日の曜日を取得する
+  const firstDay = new Date(year, month-1, 1).getDay();
+  // console.log(firstDay);
 
-export default calenderUserPage;
+  // 1週に７日分を埋め込む
+  return weekArray.map((weekNum) => {
+    return dayArray.map((dayNum) => {
+      // 日付を正しい表記にする
+      const day = dayNum + 1;
+      // 週ごとに７日ずつ増えるので７をかける
+      const week = weekNum * 7;
+      // 1週ごとの日付を計算し、取得する
+      const estimation = day + week;
+      // 最初の曜日から引くことで、前月の日にちの曜日を取得する
+      return estimation - firstDay;
+    });
+  });
+};
+
+export default CalenderUserPage;
