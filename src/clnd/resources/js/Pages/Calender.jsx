@@ -20,14 +20,11 @@ const CalenderUserPage = React.memo(function() {
     setOpenForm(!openForm);
   };
 
-  // Schedule.jsxから値が返ってくるので取得し、更新する
-  const [responseViewData, setResponseViewData] = useState({
-    date: '',
-    requirement: '',
-    memo: '',
-  });
-  const passToResponseData = (data) => {
+  // Schedule.jsxから値が返ってくるので取得・更新し、フォームを閉じる
+  const [responseViewData, setResponseViewData] = useState(null);
+  const passToResponseData = async(data) => {
     setResponseViewData(data);
+    setOpenForm(!openForm);
   };
 
   return (
@@ -63,7 +60,7 @@ const CalenderUserPage = React.memo(function() {
                         {/* 取得したデータを反映させる */}
                         <div className={ Calender.calender__content }>
                           { responseViewData && (
-                            <p className={ Calender.calender__detail }>{ responseViewData.requirement }</p>
+                            <p className={ Calender.calender__detail }>{ responseViewData.validate.requirement }</p>
                           )}
                         </div>
                       </div>
