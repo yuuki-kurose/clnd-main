@@ -26,8 +26,10 @@ const CalenderUserPage = React.memo(function() {
     requirement: '',
     memo: '',
   });
-  const passToResponseData = (data) => {
+  // task: 再レンダリングの監視をし、responseViewDataに値が反映されるように修正する
+  const passToResponseData = async(data) => {
     setResponseViewData(data);
+    console.log(responseViewData);
   };
 
   return (
@@ -63,7 +65,7 @@ const CalenderUserPage = React.memo(function() {
                         {/* 取得したデータを反映させる */}
                         <div className={ Calender.calender__content }>
                           { responseViewData && (
-                            <p className={ Calender.calender__detail }>{ responseViewData.requirement }</p>
+                            <p className={ Calender.calender__detail }>{ responseViewData.memo }</p>
                           )}
                         </div>
                       </div>

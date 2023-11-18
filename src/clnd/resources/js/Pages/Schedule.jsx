@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Schedule from "../scss/schedule.module.scss";
-import FeatureOfForm from './Feature';
+import { postFormData } from './Feature';
 
 const ScheduleForm = ({ passToResponseData }) => {
   // フォームデータ変数定義
@@ -10,25 +10,28 @@ const ScheduleForm = ({ passToResponseData }) => {
     memo: '',
   });
 
-  // フォーム送信イベントの制御
-  const [submitEvent, setSubmitEvent] = useState(false);
-
   // 入力内容の反映
   const handleChange = (event) => {
     const { name, value } = event.target;
     setScheduleFormData({ ...scheduleFormData, [name]: value});
   };
 
-  // props経由で関数を使用し、Feature.jsxに値を渡す
+  // Feature.jsxにあるpostFormData()を呼び出す
   const handleInputSubmit = async(event) => {
     event.preventDefault();
-    handleAddEvent(scheduleFormData);
-    setSubmitEvent(true);
-  };
-
-  // レスポンスデータをセットし、親（Calender .jsx)の関数を呼び出す
-  const handleAddEvent = async(data) => {
-    await passToResponseData(data);
+    // csrfトークン取得
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    // responseに、バックエンドからのレスポンスが代入される
+    const response = await postFormData({
+      csrfToken,
+      data: scheduleFormData,
+    });
+    if(response !=null) {
+      console.log('渡ってきたデータ：', response);
+      passToResponseData(response);
+    } else {
+      console.log('データがありません');
+    }
   };
 
   return(
@@ -68,8 +71,6 @@ const ScheduleForm = ({ passToResponseData }) => {
                     value="作成"
             />
           </div>
-          {/* 機能コンポーネントにフォームデータをまとめて渡す */}
-          <FeatureOfForm formData={ scheduleFormData } handleAddEvent={ handleAddEvent } submitEvent={ submitEvent } />
         </form>
       </div>
     </div>
