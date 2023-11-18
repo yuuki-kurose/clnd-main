@@ -28,7 +28,7 @@ const ScheduleForm = ({ passToResponseData }) => {
     });
     if(response !=null) {
       console.log('渡ってきたデータ：', response);
-      passToResponseData(response);
+      await passToResponseData(response);
     } else {
       console.log('データがありません');
     }
