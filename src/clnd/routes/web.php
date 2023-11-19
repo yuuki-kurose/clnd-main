@@ -16,10 +16,6 @@ Route::inertia('/login', 'Login');
  */
 Route::inertia('/calender', 'Calender');
 
-// Googleコントローラーへアクセスするためのエンドポイント
-Route::get('/google', [GoogleController::class, 'redirectToProvider']);
-Route::get('/google/callback', [GoogleController::class, 'googleCallback']);
-
 /**
  * 管理者側
  */

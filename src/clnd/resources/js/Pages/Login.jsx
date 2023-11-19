@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
+
 import Common from '../Layout/common';
 import Login from '../scss/login.module.scss';
 
@@ -62,25 +64,10 @@ function loginUserForm() {
           }
         }
       });
-    };
+  };
 
-    // Googleログイン
-    const clickToGoogle = (event) => {
-      event.preventDefault();
-      const googleApiUrl = '/google';
-      fetch(googleApiUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log('エラーが発生しました', error);
-        })
-    };
+  // VITEの環境変数確認
+  // console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 
   return(
     <Common>
@@ -114,16 +101,27 @@ function loginUserForm() {
               <input type="submit" value="ログイン" />
             </div>
             {/* Googleログイン */}
-            <div>
-              <button onClick={ clickToGoogle }>
-                Google Login
-              </button>
+            <div className={ Login.login__google }>
+              <GoogleOAuthProvider clientId={ import.meta.env.VITE_GOOGLE_CLIENT_ID }>
+                <ProsessToProvider />
+              </GoogleOAuthProvider>
             </div>
           </form>
         </div>
       </div>
     </Common>
-  )
-}
+  );
+};
+
+// Googleログイン処理
+export function ProsessToProvider() {
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log(codeResponse),
+  });
+
+  return (
+    <button onClick={ login }>Google Login</button>
+  );
+};
 
 export default loginUserForm;
