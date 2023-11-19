@@ -28,6 +28,5 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/schedule', [ScheduleController::class, 'store']);
 
-
 Route::post('/AdminRegister', [AdminRegisterController::class, 'adminRegister']);
 Route::post('/AdminLogin', [AdminLoginController::class, 'authenticate']);
