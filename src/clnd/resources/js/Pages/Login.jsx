@@ -19,7 +19,6 @@ function loginUserForm() {
   // 入力内容の反映
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(event.target);
     setLoginForm({ ...loginForm, [name]: value });
   }
 
@@ -63,7 +62,25 @@ function loginUserForm() {
           }
         }
       });
-  }
+    };
+
+    // Googleログイン
+    const clickToGoogle = (event) => {
+      event.preventDefault();
+      const googleApiUrl = '/google';
+      fetch(googleApiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log('エラーが発生しました', error);
+        })
+    };
 
   return(
     <Common>
@@ -92,8 +109,15 @@ function loginUserForm() {
               />
               { errors.password && <div className={ Login.login__error }>{ errors.password }</div> }
             </label>
+            {/* 通常ログイン */}
             <div>
               <input type="submit" value="ログイン" />
+            </div>
+            {/* Googleログイン */}
+            <div>
+              <button onClick={ clickToGoogle }>
+                Google Login
+              </button>
             </div>
           </form>
         </div>
