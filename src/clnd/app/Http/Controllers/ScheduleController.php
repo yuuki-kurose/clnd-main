@@ -23,24 +23,30 @@ class ScheduleController extends Controller {
       'memo' => '',
     ]);
 
-    //検証エラーハンドリング
+    // エラーハンドリング
     if($scheduleForm === 'error') {
       return redirect('/schedule')
         ->withErrors($scheduleForm)
         ->withInput();
     }
 
-    // ユーザー入力情報を取得し、データベースに登録
-    $scheduleForm = Schedule::create([
+    // validationチェック後、データベースに登録
+    $newScheduleForm = Schedule::create([
       'date' => $request->input('date'),
       'requirement' => $request->input('requirement'),
       'memo' => $request->input('memo'),
     ]);
-    // dd($scheduleForm);
+
+    // 登録されたデータから日付を取得
+    $selectedDate = $newScheduleForm['date'];
+
+    // 指定された日付に紐づくデータを取得
+    $formFilterData = Schedule::whereDate('date', $selectedDate)->get();
 
     return response()->json([
-      'message' => '確認しました',
-      'validate' => $scheduleForm,
+      'message' => 'スケジュールが登録されました',
+      'selectedDate' => $selectedDate,
+      'formFilterData' => $formFilterData,
     ], 200);
-  }
+  } 
 }

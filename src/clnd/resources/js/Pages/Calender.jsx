@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calender from '../scss/calender.module.scss';
 import ScheduleForm from '../Pages/Schedule';
 
@@ -22,10 +22,17 @@ const CalenderUserPage = React.memo(function() {
 
   // Schedule.jsxから値が返ってくるので取得・更新し、フォームを閉じる
   const [responseViewData, setResponseViewData] = useState(null);
+  const [formToFilterData, setFormToFilterData] = useState([]);
   const passToResponseData = async(data) => {
     setResponseViewData(data);
     setOpenForm(!openForm);
   };
+  // レスポンスデータが渡ってきたら検知し、必要なデータのみセットする
+  useEffect(() => {
+    if(responseViewData && responseViewData.selectedDate && responseViewData.formFilterData) {
+      setFormToFilterData(responseViewData.formFilterData);
+    }
+  }, [responseViewData]);
 
   return (
     <div>
@@ -48,24 +55,34 @@ const CalenderUserPage = React.memo(function() {
               </tr>
             </thead>
             <tbody>
-              {/* task: コードの分解と理解 */}
-              { calender.map((week,i) => (
-                <tr key={ week.join('') }>
-                  { week.map((day,j) => (
-                    <td key={ `${i}${j}` } id={day}>
-                      <div>
-                        <div className={ Calender.calender__inner }>
-                          {day > last ? day - last : day <= 0 ? prevlast + day : day }
+              {calender.map((week, i) => (
+                // week内には週ごとの配列が入っているのでjoin('')で繋げる
+                <tr key={week.join('')}>
+                  {week.map((day, j) => {
+                    // ユーザー選択日とビュー上の日にちが一致するか調べる
+                    const dayData = formToFilterData.filter(item => {
+                      // ユーザー選択日を取得する
+                      const itemDate = new Date(item.date).getDate();
+                      return itemDate === day;
+                    });
+                    // return()で親に返す
+                    return (
+                      <td key={`${i}${j}`} id={day}>
+                        <div>
+                          <div className={Calender.calender__inner}>
+                            {/* 条件に当てはまらなければ、そのままdayを返す */}
+                            {day > last ? day - last : day <= 0 ? prevlast + day : day}
+                          </div>
+                          <div className={Calender.calender__content}>
+                            {/* dayDataを使用して、ユーザー選択日に紐付くデータを表示させる */}
+                            {dayData.map(item => (
+                              <p key={item.id} className={Calender.calender__detail}>{item.requirement}</p>
+                            ))}
+                          </div>
                         </div>
-                        {/* 取得したデータを反映させる */}
-                        <div className={ Calender.calender__content }>
-                          { responseViewData && (
-                            <p className={ Calender.calender__detail }>{ responseViewData.validate.requirement }</p>
-                          )}
-                        </div>
-                      </div>
-                    </td>
-                  ))}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>
@@ -110,5 +127,6 @@ function createCalender(year, month) {
     });
   });
 };
+// console.log(createCalender(2023, 11));
 
 export default CalenderUserPage;
