@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GoogleController;
-use Laravel\Socialite\Facades\Socialite;
+// use App\Http\Controllers\GoogleController;
+// use Laravel\Socialite\Facades\Socialite;
 
 /**
  * ユーザー側

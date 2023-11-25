@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    /* Basic Options */
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react",
     "module": "esnext",
@@ -8,8 +9,8 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
-  "include": ["resources/ts/**/*", "resources/ts/bootstrap.js"],
+  "include": ["resources/js/**/*"],
   "exclude": ["node_modules"]
 }
