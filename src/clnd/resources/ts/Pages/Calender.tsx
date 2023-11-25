@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Calender from '../scss/calender.module.scss';
-import ScheduleForm from '../Pages/Schedule';
+import ScheduleForm from './Schedule';
 
 const CalenderUserPage = React.memo(function() {
 
