@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import Schedule from "../scss/schedule.module.scss";
 import { postFormData } from './Feature';
 
 const ScheduleForm = ({ passToResponseData }) => {
+
+  // フォームデータの型
+  type RequestFormState = {
+    date: Date,
+    requirement: string,
+    memo: string
+  };
   // フォームデータ変数定義
-  const [scheduleFormData, setScheduleFormData] = useState({
-    date: '',
+  const [scheduleFormData, setScheduleFormData] = useState<RequestFormState>({
+    date: new Date(),
     requirement: '',
-    memo: '',
+    memo: ''
   });
 
   // 入力内容の反映
