@@ -10,11 +10,12 @@ const ScheduleForm = ({ passToResponseData }) => {
     requirement: string,
     memo: string
   };
+  
   // フォームデータ変数定義
   const [scheduleFormData, setScheduleFormData] = useState<RequestFormState>({
     date: new Date(),
     requirement: '',
-    memo: ''
+    memo: '',
   });
 
   // 入力内容の反映
@@ -33,7 +34,7 @@ const ScheduleForm = ({ passToResponseData }) => {
       csrfToken,
       data: scheduleFormData,
     });
-    if(response !=null) {
+    if(response != null) {
       await passToResponseData(response);
     } else {
       console.log('データがありません');

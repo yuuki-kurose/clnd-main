@@ -1,3 +1,14 @@
+/**
+ * レスポンスデータに型をつける
+ * 
+ * task: selectedDateの型の見直し　date -> stringになっているため
+ */
+interface initialResponse {
+  formFilterData: [];
+  message: string;
+  selectedDate: string;
+};
+
 // APIルート
 const scheduleApiUrl = '/api/schedule';
 
@@ -15,7 +26,9 @@ export const postFormData = async({ csrfToken, data }) => {
     if(!response.ok) {
       throw new Error('エラーが出ました');
     };
-    return response.json();
+    const responseData: initialResponse = await response.json();
+    console.log('返ってきたデータ：', responseData);
+    return responseData;
   } catch(error) {
       console.log(error);
       return undefined;

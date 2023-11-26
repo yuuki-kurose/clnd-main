@@ -30,6 +30,12 @@ class Schedule extends Model
     'requirement',
     'memo',
   ];
+  // $fillableの属性にデータ型を指定する
+  protected $casts = [
+    'date' => 'date',
+    'requirement' => 'string',
+    'memo' => 'string'
+  ];
 
   /**
    * 外部キーを使用のため、Userテーブルと関連付ける
