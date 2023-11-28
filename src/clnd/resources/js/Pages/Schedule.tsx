@@ -1,18 +1,18 @@
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import Schedule from "../scss/schedule.module.scss";
 import { postFormData } from './Feature';
+import { extendedResponseData } from './Feature';
 
 const ScheduleForm = ({ passToResponseData }) => {
-
-  // フォームデータの型
-  type RequestFormState = {
-    date: Date,
-    requirement: string,
-    memo: string
-  };
   
+  // フォームデータの型
+  interface initialForm {
+    date: Date;
+    requirement: string;
+    memo: string;
+  };
   // フォームデータ変数定義
-  const [scheduleFormData, setScheduleFormData] = useState<RequestFormState>({
+  const [scheduleFormData, setScheduleFormData] = useState<initialForm>({
     date: new Date(),
     requirement: '',
     memo: '',
@@ -22,19 +22,25 @@ const ScheduleForm = ({ passToResponseData }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setScheduleFormData({ ...scheduleFormData, [name]: value});
+    console.log(typeof scheduleFormData.requirement);
   };
 
   // Feature.jsxにあるpostFormData()を呼び出す
   const handleInputSubmit = async(event) => {
     event.preventDefault();
     // csrfトークン取得
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    // csrfTokenに対し、検証を行う
+    if(!csrfToken) {
+      console.log('csrfTokenが見つかりません');
+      return
+    }
     // responseに、バックエンドからのレスポンスが代入される
-    const response = await postFormData({
+    const response: extendedResponseData | undefined = await postFormData({
       csrfToken,
       data: scheduleFormData,
     });
-    if(response != null) {
+    if(response != undefined) {
       await passToResponseData(response);
     } else {
       console.log('データがありません');

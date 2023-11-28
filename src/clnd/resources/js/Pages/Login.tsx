@@ -3,17 +3,18 @@ import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 
 import Common from '../Layout/common';
 import Login from '../scss/login.module.scss';
+import { initialUserContent } from './Register';
 
 function loginUserForm() {
   // ログインフォーム変数定義
-  const [loginForm, setLoginForm] = useState({
+  const [loginForm, setLoginForm] = useState<initialUserContent>({
     name: '',
     email: '',
     password: '',
   });
 
   // エラー変数定義
-  const [errors, setErrors] = useState({
+  const [errors, setErrors]= useState({
     email: '',
     password: '',
   });

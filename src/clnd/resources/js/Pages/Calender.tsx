@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Calender from '../scss/calender.module.scss';
 import ScheduleForm from './Schedule';
+import { extendedResponseData } from './Feature';
+import { initialResponseForm } from './Feature';
 
 const CalenderUserPage = React.memo(function() {
 
@@ -21,9 +23,9 @@ const CalenderUserPage = React.memo(function() {
   };
 
   // Schedule.jsxから値が返ってくるので取得・更新し、フォームを閉じる
-  const [responseViewData, setResponseViewData] = useState(null);
-  const [formToFilterData, setFormToFilterData] = useState([]);
-  const passToResponseData = async(data) => {
+  const [responseViewData, setResponseViewData] = useState<extendedResponseData>();
+  const [formToFilterData, setFormToFilterData] = useState<initialResponseForm>();
+  const passToResponseData = async(data: extendedResponseData) => {
     setResponseViewData(data);
     setOpenForm(!openForm);
   };
@@ -31,6 +33,7 @@ const CalenderUserPage = React.memo(function() {
   useEffect(() => {
     if(responseViewData && responseViewData.selectedDate && responseViewData.formFilterData) {
       setFormToFilterData(responseViewData.formFilterData);
+      console.log(formToFilterData);
     }
   }, [responseViewData]);
 
@@ -60,10 +63,13 @@ const CalenderUserPage = React.memo(function() {
                 <tr key={week.join('')}>
                   {week.map((day, j) => {
                     // ユーザー選択日とビュー上の日にちが一致するか調べる
-                    const dayData = formToFilterData.filter(item => {
+                    const dayData = formToFilterData?.filter(item => {
+                      if (item.date) {
                       // ユーザー選択日を取得する
-                      const itemDate = new Date(item.date).getDate();
+                      const itemDate: number = new Date(item.date).getDate();
                       return itemDate === day;
+                      }
+                      return false;
                     });
                     // return()で親に返す
                     return (
@@ -75,7 +81,7 @@ const CalenderUserPage = React.memo(function() {
                           </div>
                           <div className={Calender.calender__content}>
                             {/* dayDataを使用して、ユーザー選択日に紐付くデータを表示させる */}
-                            {dayData.map(item => (
+                            {dayData?.map(item => (
                               <p key={item.id} className={Calender.calender__detail}>{item.requirement}</p>
                             ))}
                           </div>
