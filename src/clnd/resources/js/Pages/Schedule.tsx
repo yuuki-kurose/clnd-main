@@ -4,7 +4,7 @@ import { postFormData } from './Feature';
 import { extendedResponseData } from './Feature';
 import { propsFunc } from './Calender';
 
-const ScheduleForm: React.FC<propsFunc> = ({ passToResponseData }) => {
+const ScheduleForm = ({ passToResponseData }: propsFunc) => {
   
   // フォームデータの型
   interface initialForm {
