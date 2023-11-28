@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 import Common from '../Layout/common';
 import Register from '../scss/register.module.scss';
 
+// ユーザー登録フォームの型
+export interface initialUserContent {
+  name: string;
+  email: string;
+  password: string;
+};
+
 function RegistrationForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<initialUserContent>({
     name: '',
     email: '',
     password: '',
   });
 
   // csrfトークンの取得
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
   // フォーム入力の反映
   const handleChange = (event) => {

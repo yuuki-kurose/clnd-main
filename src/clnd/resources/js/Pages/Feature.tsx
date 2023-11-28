@@ -1,3 +1,16 @@
+// レスポンスデータ内のformFilterDataの型
+export interface initialResponseForm {
+  id: number;
+  requirement: string;
+  memo: string;
+};
+// レスポンスデータの型
+export interface extendedResponseData extends initialResponseForm {
+  formFilterData: [];
+  message: string;
+  selectedDate: string;
+}
+
 // APIルート
 const scheduleApiUrl = '/api/schedule';
 
@@ -15,7 +28,9 @@ export const postFormData = async({ csrfToken, data }) => {
     if(!response.ok) {
       throw new Error('エラーが出ました');
     };
-    return response.json();
+    const responseData: extendedResponseData = await response.json();
+    console.log('返ってきたデータ：', responseData, typeof responseData);
+    return responseData;
   } catch(error) {
       console.log(error);
       return undefined;
