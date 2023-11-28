@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Schedule from "../scss/schedule.module.scss";
 import { postFormData } from './Feature';
 import { extendedResponseData } from './Feature';
+import { propsFunc } from './Calender';
 
-const ScheduleForm = ({ passToResponseData }) => {
+const ScheduleForm: React.FC<propsFunc> = ({ passToResponseData }) => {
   
   // フォームデータの型
   interface initialForm {
@@ -11,6 +12,7 @@ const ScheduleForm = ({ passToResponseData }) => {
     requirement: string;
     memo: string;
   };
+
   // フォームデータ変数定義
   const [scheduleFormData, setScheduleFormData] = useState<initialForm>({
     date: new Date(),

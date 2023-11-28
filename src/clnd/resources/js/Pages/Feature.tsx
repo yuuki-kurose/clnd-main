@@ -3,7 +3,9 @@ export interface initialResponseForm {
   id: number;
   requirement: string;
   memo: string;
+  created_at: string;
 };
+
 // レスポンスデータの型
 export interface extendedResponseData extends initialResponseForm {
   formFilterData: [];

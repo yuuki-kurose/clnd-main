@@ -4,10 +4,17 @@ import ScheduleForm from './Schedule';
 import { extendedResponseData } from './Feature';
 import { initialResponseForm } from './Feature';
 
+// Schedule.tsxに渡す関数の型
+type passToResponseDataFunc = (data: extendedResponseData) => Promise<void>;
+
+export interface propsFunc {
+  passToResponseData: passToResponseDataFunc;
+};
+
 const CalenderUserPage = React.memo(function() {
 
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth()+1);
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [month, setMonth] = useState<number>(new Date().getMonth()+1);
   // カレンダーの日付を反映する関数を呼び出し
   const calender = createCalender(year, month);
   // 当月の最後日を取得
@@ -24,8 +31,8 @@ const CalenderUserPage = React.memo(function() {
 
   // Schedule.jsxから値が返ってくるので取得・更新し、フォームを閉じる
   const [responseViewData, setResponseViewData] = useState<extendedResponseData>();
-  const [formToFilterData, setFormToFilterData] = useState<initialResponseForm>();
-  const passToResponseData = async(data: extendedResponseData) => {
+  const [formToFilterData, setFormToFilterData] = useState<initialResponseForm[]>();
+  const passToResponseData: passToResponseDataFunc = async(data) => {
     setResponseViewData(data);
     setOpenForm(!openForm);
   };
