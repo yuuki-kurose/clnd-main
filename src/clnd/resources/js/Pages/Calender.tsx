@@ -6,12 +6,16 @@ import { initialResponseForm } from './Feature';
 
 // Schedule.tsxに渡す関数の型
 type passToResponseDataFunc = (data: extendedResponseData) => Promise<void>;
-
 export interface propsFunc {
   passToResponseData: passToResponseDataFunc;
 };
 
+// CalenderUserPageをmemo化する
 const CalenderUserPage = React.memo(function() {
+
+  // ローカルストレージに保存されているIDの確認
+  const userId = localStorage.getItem('userId');
+  console.log('保存されていたユーザーID：', userId);
 
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth()+1);
@@ -40,13 +44,12 @@ const CalenderUserPage = React.memo(function() {
   useEffect(() => {
     if(responseViewData && responseViewData.selectedDate && responseViewData.formFilterData) {
       setFormToFilterData(responseViewData.formFilterData);
-      console.log(formToFilterData);
-    }
-  }, [responseViewData]);
+    };
+  }, [formToFilterData]);
 
+  // カレンダービュー部分
   return (
     <div>
-      {/* カレンダーページ */}
       <div className={ Calender.calender }>
         <div className={ Calender.calender__header }>
           <div>
@@ -74,6 +77,7 @@ const CalenderUserPage = React.memo(function() {
                       if (item.date) {
                       // ユーザー選択日を取得する
                       const itemDate: number = new Date(item.date).getDate();
+                      // console.log(`Item Date: ${itemDate}, Day: ${day}`);
                       return itemDate === day;
                       }
                       return false;
@@ -88,7 +92,7 @@ const CalenderUserPage = React.memo(function() {
                           </div>
                           <div className={Calender.calender__content}>
                             {/* dayDataを使用して、ユーザー選択日に紐付くデータを表示させる */}
-                            {dayData?.map(item => (
+                            {dayData?.map(item => ( 
                               <p key={item.id} className={Calender.calender__detail}>{item.requirement}</p>
                             ))}
                           </div>
@@ -124,17 +128,19 @@ function createCalender(year, month) {
   const dayArray = [0,1,2,3,4,5,6];
   // 今月１日の曜日を取得する
   const firstDay = new Date(year, month-1, 1).getDay();
-  // console.log(firstDay);
 
   // 1週に７日分を埋め込む
   return weekArray.map((weekNum) => {
     return dayArray.map((dayNum) => {
       // 日付を正しい表記にする
       const day = dayNum + 1;
+      // console.log(day);
       // 週ごとに７日ずつ増えるので７をかける
       const week = weekNum * 7;
+      // console.log(week);
       // 1週ごとの日付を計算し、取得する
       const estimation = day + week;
+      // console.log(estimation);
       // 最初の曜日から引くことで、前月の日にちの曜日を取得する
       return estimation - firstDay;
     });
