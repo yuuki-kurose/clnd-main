@@ -8,15 +8,22 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller {
   public function authenticate(Request $request) {
 
-    $email = $request->input('email');
-    $password = $request->input('password');
+    // リクエストデータの検証
+    $loginUser = $request->validate([
+      'email' => ['required', 'email'],
+      'password' => 'required',
+    ]);
 
-    if(Auth::attempt(['email' => $email, 'password' => $password])) {
+    // 検証後のデータを認証
+    if(Auth::attempt($loginUser)) {
+      // ユーザー情報を取得
+      $user = Auth::user();
       return response()->json([
+        'userId' => $user->id,
         'message' => '認証成功',
         'redirectTo' => '/calender',
       ], 200);
-    } else if(!Auth::attempt(['email' => $email])) {
+    } else if(!Auth::attempt(['email' => $loginUser['email']])) {
       $errors = ['email' => 'メールアドレスが間違っています'];
       return response()->json([
         'message' => '認証失敗',

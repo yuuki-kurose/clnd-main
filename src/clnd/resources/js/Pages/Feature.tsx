@@ -1,9 +1,11 @@
 // レスポンスデータ内のformFilterDataの型
 export interface initialResponseForm {
   id: number;
+  date: string;
   requirement: string;
   memo: string;
   created_at: string;
+  updated_at: string;
 };
 
 // レスポンスデータの型

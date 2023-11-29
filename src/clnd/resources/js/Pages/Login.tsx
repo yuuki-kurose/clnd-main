@@ -5,7 +5,15 @@ import Common from '../Layout/common';
 import Login from '../scss/login.module.scss';
 import { initialUserContent } from './Register';
 
-function loginUserForm() {
+// ログインレスポンスデータの型
+interface loginUserData {
+  message: string;
+  redirectTo: string;
+  userId: number;
+};
+
+function LoginUserForm() {
+
   // ログインフォーム変数定義
   const [loginForm, setLoginForm] = useState<initialUserContent>({
     name: '',
@@ -23,52 +31,32 @@ function loginUserForm() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setLoginForm({ ...loginForm, [name]: value });
-  }
-
-  // ログインフォーム送信
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // エンドポイント
-    const apiUrl = '/api/login';
-
-    // 送信形態
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(loginForm)
-    }
-
-    // laravelからレスポンスデータ取得
-    fetch(apiUrl, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        if(data.message === "認証成功") {
-          console.log(data.message);
-          window.location.href = data.redirectTo;
-        } else if(data.message === "認証失敗") {
-          if(data.errors.email) {
-            setErrors({
-              email: data.errors.email,
-              password: '',
-            });
-          } else if(data.errors.password) {
-            /**
-             * task: パスワードのエラーハンドリング見直し
-             */
-            setErrors({
-              email: '',
-              password: data.errors.password,
-            });
-          }
-        }
-      });
   };
 
-  // VITEの環境変数確認
-  // console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
+  // エンドポイント
+  const apiUrl = '/api/login';
+
+  // ログインリクエスト・レスポンス取得
+  const handleSubmit = async(event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginForm)
+      });
+      const responseLoginData: loginUserData = await response.json();
+      // ユーザーIDをローカルストレージに保存し、カレンダーページへ遷移
+      if(responseLoginData) {
+        localStorage.setItem('userId', responseLoginData.userId.toString());
+        window.location.href = responseLoginData.redirectTo;
+      }
+    } catch(error) {
+      console.log(error);
+    };
+  };
 
   return(
     <Common>
@@ -125,4 +113,4 @@ export function ProsessToProvider() {
   );
 };
 
-export default loginUserForm;
+export default LoginUserForm;
