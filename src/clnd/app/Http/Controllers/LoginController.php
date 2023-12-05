@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller {
-  public function authenticate(Request $request) {
+class LoginController extends Controller
+{
+  public function authenticate(Request $request)
+  {
 
     // リクエストデータの検証
     $loginUser = $request->validate([

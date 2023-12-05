@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Userモデル内のIDを外部キーとして持っているモデルと関連付ける
+     * Scheduleモデルと関連づける
      */
     public function user()
     {

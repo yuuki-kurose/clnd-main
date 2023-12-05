@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller {
-  public function authenticate(Request $request) {
+  public function authenticate(Request $request)
+  {
     $loginForm = $request->validate([
       'email' => ['required', 'email'],
       'password' => ['required'],

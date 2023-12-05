@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 
 class AdminRegisterController extends Controller {
-  public function adminRegister(Request $request) {
+  public function adminRegister(Request $request)
+  {
     $formData = $request->validate([
       'name' => 'required | string | max:255',
       'email' => 'required| string | email | unique:admins',
