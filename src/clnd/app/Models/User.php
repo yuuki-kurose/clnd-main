@@ -41,12 +41,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * Scheduleモデルと関連づける
-     */
-    public function user()
-    {
-      return $this->hasOne(Schedule::class);
-    }
 }

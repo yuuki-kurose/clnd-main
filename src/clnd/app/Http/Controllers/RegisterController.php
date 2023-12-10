@@ -27,11 +27,8 @@ class RegisterController extends Controller {
 
     // データベースに登録された変数を、リレーションに結びつける
     if($user) {
-      $scheduleData = $user->user();
-      dd($scheduleData);
       return response()->json([
         'message' => 'ユーザー登録が完了しました',
-        'scheduleData' => $scheduleData,
         'user' => $user,
         'redirect' => '/',
       ]);

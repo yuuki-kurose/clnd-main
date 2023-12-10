@@ -1,7 +1,7 @@
 <?php
  
 namespace App\Http\Controllers;
- 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,7 +9,6 @@ class LoginController extends Controller
 {
   public function authenticate(Request $request)
   {
-
     // リクエストデータの検証
     $loginUser = $request->validate([
       'email' => ['required', 'email'],
@@ -18,10 +17,10 @@ class LoginController extends Controller
 
     // 検証後のデータを認証
     if(Auth::attempt($loginUser)) {
-      // ユーザー情報を取得
-      $user = Auth::user();
+      $token = $request->user()->createToken($request->token_name ?? 'null');
+      // dd($token);
       return response()->json([
-        'userId' => $user->id,
+        'token' => $token->plainTextToken,
         'message' => '認証成功',
         'redirectTo' => '/calender',
       ], 200);

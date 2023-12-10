@@ -6,6 +6,7 @@ import { initialResponseForm } from './Feature';
 
 // Schedule.tsxに渡す関数の型
 type passToResponseDataFunc = (data: extendedResponseData) => Promise<void>;
+
 export interface propsFunc {
   passToResponseData: passToResponseDataFunc;
 };
@@ -13,9 +14,9 @@ export interface propsFunc {
 // CalenderUserPageをmemo化する
 const CalenderUserPage = React.memo(function() {
 
-  // ローカルストレージに保存されているIDの確認
-  const userId = localStorage.getItem('userId');
-  console.log('保存されていたユーザーID：', userId);
+  // 認証トークンの取得
+  const attemptToken = localStorage.getItem('token_name');
+  console.log('認証トークン：', attemptToken);
 
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth()+1);
