@@ -22,7 +22,6 @@ function RegistrationForm() {
   // フォーム入力の反映
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(event.target);
     setFormData({ ...formData, [name]: value });
   };
 
@@ -42,18 +41,19 @@ function RegistrationForm() {
       },
       body: JSON.stringify(formData),
     };
-    console.log(requestOptions);
 
     // laravelからレスポンスデータ取得
     fetch(apiUrl,requestOptions)
       .then(response => response.json())
       .then(data => {
-        console.log('送信完了', data);
-        if(data.redirect) {
+        if(data) {
           window.location.href = data.redirect;
         }
       })
       .catch(error => {
+        /**
+         * task: エラー画面の作成・遷移
+         */
         console.log('エラー', error);
       });
   }

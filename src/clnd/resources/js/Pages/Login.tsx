@@ -9,7 +9,7 @@ import { initialUserContent } from './Register';
 interface loginUserData {
   message: string;
   redirectTo: string;
-  userId: number;
+  token: string;
 };
 
 function LoginUserForm() {
@@ -36,30 +36,43 @@ function LoginUserForm() {
   // エンドポイント
   const apiUrl = '/api/login';
 
+  // csrfトークンの取得
+  const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+  // 認証トークンの取得
+  const attemptToken = localStorage.getItem('token_name');
+
   // ログインリクエスト・レスポンス取得
   const handleSubmit = async(event) => {
     event.preventDefault();
+
+    // 初回ログイン時に、認証トークンを保持し以降はリクエストヘッダーに含める
     try {
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...(attemptToken && { 'Authorization': `Bearer ${ attemptToken }`}),
+          'X-CSRF-TOKEN': csrfToken ?? '',
         },
         body: JSON.stringify(loginForm)
       });
+      // レスポンスデータ取得
       const responseLoginData: loginUserData = await response.json();
-      // ユーザーIDをローカルストレージに保存し、カレンダーページへ遷移
+
+      // 認証トークンをローカルストレージに保存し、カレンダーページへ遷移
       if(responseLoginData) {
-        localStorage.setItem('userId', responseLoginData.userId.toString());
+        localStorage.setItem('token_name', responseLoginData.token);
         window.location.href = responseLoginData.redirectTo;
       }
     } catch(error) {
-      console.log(error);
+      console.log('エラーになりました', error);
     };
   };
 
   return(
     <Common>
+      {/* ログインビュー定義 */}
       <div className={ Login.login }>
         <div>
           <h1 className={ Login.login__title }>ログイン</h1>
