@@ -4,20 +4,20 @@ import ScheduleForm from './Schedule';
 import { extendedResponseData } from './Feature';
 import { initialResponseForm } from './Feature';
 
-// Schedule.tsxに渡す関数の型
+/**
+ * propsで渡す関数の型定義
+ */
 type passToResponseDataFunc = (data: extendedResponseData) => Promise<void>;
 
 export interface propsFunc {
   passToResponseData: passToResponseDataFunc;
 };
 
-// CalenderUserPageをmemo化する
 const CalenderUserPage = React.memo(function() {
 
-  // 認証トークンの取得
-  const attemptToken = localStorage.getItem('token_name');
-  console.log('認証トークン：', attemptToken);
-
+  /**
+   * カレンダービュー表示に必要な値の取得や処理の呼び出し
+   */
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth()+1);
   // カレンダーの日付を反映する関数を呼び出し
@@ -27,14 +27,17 @@ const CalenderUserPage = React.memo(function() {
   // 前月の最後日を取得
   const prevlast = new Date(year,month-1, 0).getDate();
 
-  // 予定作成フォームの状態を取得
+  /**
+   * 投稿フォームの状態を管理
+   */
   const [openForm, setOpenForm] = useState(false);
-  // 予定作成フォームの表示/非表示
   const handleClick = () => {
     setOpenForm(!openForm);
   };
 
-  // Schedule.jsxから値が返ってくるので取得・更新し、フォームを閉じる
+  /**
+   * 投稿後のレスポンスの値が渡ってくるので管理
+   */
   const [responseViewData, setResponseViewData] = useState<extendedResponseData>();
   const [formToFilterData, setFormToFilterData] = useState<initialResponseForm[]>();
   const passToResponseData: passToResponseDataFunc = async(data) => {
@@ -48,7 +51,9 @@ const CalenderUserPage = React.memo(function() {
     };
   }, [formToFilterData]);
 
-  // カレンダービュー部分
+  /**
+   * ビュー定義
+   */
   return (
     <div>
       <div className={ Calender.calender }>
@@ -147,6 +152,5 @@ function createCalender(year, month) {
     });
   });
 };
-// console.log(createCalender(2023, 11));
 
 export default CalenderUserPage;

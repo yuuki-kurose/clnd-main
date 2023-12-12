@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminRegisterController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SearchDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/schedule', [ScheduleController::class, 'store']);
+
+// 投稿データ検索に使用するエンドポイント
+Route::post('/searchData', [SearchDataController::class, 'searchUserData']);
 
 Route::post('/AdminRegister', [AdminRegisterController::class, 'adminRegister']);
 Route::post('/AdminLogin', [AdminLoginController::class, 'authenticate']);
