@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 
-import CalenderUserPage from './Calender';
 import Search from '../scss/search.module.scss';
+import CalenderUserPage from './Calender';
 
 /**
  * レスポンスデータの型定義
@@ -60,7 +61,14 @@ const SearchToUserData = () => {
       { loading ? (
         <p className={ Search.loader__content }>Loading...</p>
       ):(
-        <p>サンプルです</p>
+        <div>
+          <Router>
+            <Routes>
+              <Route path="/calender" element={<CalenderUserPage/>} />
+            </Routes>
+          </Router>
+          <p>準備ができました</p>
+        </div>
       )}
     </div>
   );
