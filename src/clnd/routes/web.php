@@ -11,6 +11,10 @@ Route::inertia('/', 'Home');
 Route::inertia('/register', 'Register');
 Route::inertia('/login', 'Login');
 
+// 仮ルート
+Route::inertia('/calender', 'Calender');
+Route::inertia('/search', 'Search');
+
 /**
  * 管理者側
  */

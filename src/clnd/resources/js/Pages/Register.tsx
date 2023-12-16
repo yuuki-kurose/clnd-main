@@ -10,6 +10,8 @@ export interface initialUserContent {
 };
 
 function RegistrationForm() {
+
+  // ユーザー登録フォームの変数定義
   const [formData, setFormData] = useState<initialUserContent>({
     name: '',
     email: '',

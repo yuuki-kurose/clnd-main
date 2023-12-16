@@ -31,4 +31,12 @@ class Schedule extends Model
       'requirement' => 'string',
       'memo' => 'string'
     ];
+
+    /**
+     * 属性しているモデルを示す
+     */
+    public function userId()
+    {
+      return $this->belongsTo(User::class);
+    }
 }
