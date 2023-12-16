@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Route;
  * ユーザー側
  */
 Route::inertia('/', 'Home');
-Route::inertia('/register', 'Register');
-Route::inertia('/login', 'Login');
+// Route::inertia('/register', 'Register');
+// Route::inertia('/login', 'Login');
 
 // 仮ルート
-Route::inertia('/calender', 'Calender');
-Route::inertia('/search', 'Search');
+// Route::inertia('/calender', 'Calender');
+// Route::inertia('/search', 'Search');
 
 /**
  * 管理者側
