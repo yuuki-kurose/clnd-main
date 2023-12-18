@@ -4,9 +4,7 @@ import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 
 import Common from '../Layout/common';
 import Login from '../scss/login.module.scss';
-import { initialUserContent } from './Register';
 import SearchToUserData from './Search';
-import CommonRouter from './Router';
 
 // ログインレスポンスデータの型
 interface loginUserData {
@@ -69,7 +67,7 @@ function LoginUserForm() {
       // 認証トークンをローカルストレージに保存し、カレンダーページへ遷移
       if(responseLoginData) {
         localStorage.setItem('token_name', responseLoginData.token);
-        navigate('/Search');
+        navigate('/search');
       }
     } catch(error) {
       console.log('エラーになりました', error);
@@ -107,9 +105,6 @@ function LoginUserForm() {
             {/* 通常ログイン */}
             <div>
               <input type="submit" value="ログイン" />
-              <Router>
-                <CommonRouter />
-              </Router>
             </div>
             {/* Googleログイン */}
             <div className={ Login.login__google }>
