@@ -22,7 +22,7 @@ class LoginController extends Controller
       return response()->json([
         'token' => $token->plainTextToken,
         'message' => '認証成功',
-        // 'redirectTo' => '/search',
+        'redirectTo' => '/search',
       ], 200);
     } else if(!Auth::attempt(['email' => $loginUser['email']])) {
       $errors = ['email' => 'メールアドレスが間違っています'];

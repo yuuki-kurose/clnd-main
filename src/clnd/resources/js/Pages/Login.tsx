@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate, BrowserRouter as Router } from 'react-router-dom';
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 
-import Common from '../Layout/common';
+import Common from '../Layout/Common';
 import Login from '../scss/login.module.scss';
-import SearchToUserData from './Search';
+import { initialUserContent } from './Register';
 
 // ログインレスポンスデータの型
 interface loginUserData {
@@ -43,9 +42,6 @@ function LoginUserForm() {
   // 認証トークンの取得
   const attemptToken = localStorage.getItem('token_name');
 
-  // ルートの設定
-  const navigate = useNavigate();
-
   // ログインリクエスト・レスポンス取得
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -67,7 +63,7 @@ function LoginUserForm() {
       // 認証トークンをローカルストレージに保存し、カレンダーページへ遷移
       if(responseLoginData) {
         localStorage.setItem('token_name', responseLoginData.token);
-        navigate('/search');
+        window.location.href = responseLoginData.redirectTo;
       }
     } catch(error) {
       console.log('エラーになりました', error);
