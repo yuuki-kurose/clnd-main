@@ -1,5 +1,7 @@
-import Common from "../Layout/common";
-import Home from "../scss/home.module.scss";
+import React from "react";
+
+import Common from "../Layout/Common";
+import Home from '../scss/home.module.scss';
 
 const Welcome = () => {
   return (

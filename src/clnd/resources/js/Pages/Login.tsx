@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 
-import Common from '../Layout/common';
+import Common from '../Layout/Common';
 import Login from '../scss/login.module.scss';
 import { initialUserContent } from './Register';
 

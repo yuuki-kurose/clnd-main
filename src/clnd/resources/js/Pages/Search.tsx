@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+// import { Inertia } from '@inertiajs/inertia';
+// import { InertiaLink } from '@inertiajs/inertia-react';
 
 import Search from '../scss/search.module.scss';
-import CalenderUserPage from './Calender';
 
 /**
  * レスポンスデータの型定義
@@ -18,6 +18,9 @@ const SearchToUserData = () => {
 
   // ローディング管理
   const [loading, setLoading] = useState(true);
+
+  // レスポンスデータ管理
+  const [searchUserData, setSearchUserData] = useState('');
 
   // APIエンドポイント
   const apiUrl = '/api/searchData';
@@ -42,6 +45,8 @@ const SearchToUserData = () => {
       // レスポンスデータ取得
       const responseUserPostData: initialPostData = await attemptPostData.json();
       console.log('レスポンスに含まれたデータ：', responseUserPostData);
+      setSearchUserData(responseUserPostData);
+      // Inertia.reload({ preserveScroll: true });
       setLoading(false);
       return responseUserPostData;
     } catch(error) {
@@ -62,12 +67,7 @@ const SearchToUserData = () => {
         <p className={ Search.loader__content }>Loading...</p>
       ):(
         <div>
-          <Router>
-            <Routes>
-              <Route path="/calender" element={<CalenderUserPage/>} />
-            </Routes>
-          </Router>
-          <p>準備ができました</p>
+          準備ができました
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Common from '../Layout/common';
+import Common from '../Layout/Common';
 import Register from '../scss/register.module.scss';
 
 // ユーザー登録フォームの型
