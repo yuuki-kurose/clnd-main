@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Inertia } from '@inertiajs/inertia';
+// import { InertiaLink } from '@inertiajs/inertia-react';
 
 import Search from '../scss/search.module.scss';
 
@@ -45,6 +46,7 @@ const SearchToUserData = () => {
       const responseUserPostData: initialPostData = await attemptPostData.json();
       console.log('レスポンスに含まれたデータ：', responseUserPostData);
       setSearchUserData(responseUserPostData);
+      // Inertia.reload({ preserveScroll: true });
       setLoading(false);
       return responseUserPostData;
     } catch(error) {
@@ -65,13 +67,7 @@ const SearchToUserData = () => {
         <p className={ Search.loader__content }>Loading...</p>
       ):(
         <div>
-          <Link to={{
-              pathname: `/calender/${searchUserData.postData[0].id}`,
-              state: searchUserData
-            }}
-          >
-            Click Me!
-          </Link>
+          準備ができました
         </div>
       )}
     </div>

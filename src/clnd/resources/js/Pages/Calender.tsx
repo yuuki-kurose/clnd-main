@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import Calender from '../scss/calender.module.scss';
 import ScheduleForm from './Schedule';
@@ -16,8 +15,6 @@ export interface propsFunc {
 };
 
 const CalenderUserPage = React.memo(function() {
-
-  const { id } = useParams();
 
   /**
    * カレンダービュー表示に必要な値の取得や処理の呼び出し
